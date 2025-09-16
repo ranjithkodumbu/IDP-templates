@@ -1,0 +1,72 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: goldenpath-flask-service
+  title: Golden Path – Flask Service
+  description: Scaffold a standardized Flask microservice with Docker, metrics, and CI/CD.
+spec:
+  owner: development
+  type: service
+
+  parameters:
+    - title: Service Information
+      required: [name, owner, description]
+      properties:
+        name:
+          type: string
+          title: Service Name
+          description: Unique name for your service
+        owner:
+          type: string
+          title: Owner
+          description: Owner team or group
+        description:
+          type: string
+          title: Description
+          description: Short description of the service
+
+    - title: Repository Location
+      required: [repo]
+      properties:
+        repo:
+          type: string
+          title: Repository Name
+          description: Name of the new GitHub repository
+        repoVisibility:
+          type: string
+          title: Repository Visibility
+          enum: [public, private]
+          default: public
+
+  steps:
+    - id: fetch
+      name: Fetch Template Source
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          name: ${{ parameters.name }}
+          owner: ${{ parameters.owner }}
+          description: ${{ parameters.description }}
+          destination:
+            repo: ${{ parameters.repo }}
+            owner: ramannkhanna2
+
+    - id: wait
+      name: Wait for GitHub to index repo
+      action: debug:wait
+      input:
+        seconds: 5        
+
+    - id: publish
+      name: Publish to GitHub
+      action: publish:github
+      input:
+        #repoUrl: github.com?repo=${{ parameters.repo }}&owner=ramannkhanna2
+        repoUrl: github.com?owner=ramannkhanna2&repo=${{ parameters.repo }}
+        repoVisibility: ${{ parameters.repoVisibility }}
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps['publish'].output.remoteUrl }}
