@@ -5,7 +5,7 @@ metadata:
   title: Terraform – Secured Infra (VPC, S3)
   description: Scaffold a Terraform module for VPC + S3 with encryption.
 spec:
-  owner: platform-team
+  owner: ramannkhanna2
   type: infrastructure
 
   parameters:
