@@ -1,0 +1,56 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: terraform-secured-infra
+  title: Terraform – Secured Infra (VPC, S3)
+  description: Scaffold a Terraform module for VPC + S3 with encryption.
+spec:
+  owner: platform-team
+  type: infrastructure
+
+  parameters:
+    - title: Infrastructure Details
+      required: [project_name, aws_region, vpc_cidr, s3_bucket_name]
+      properties:
+        project_name:
+          type: string
+          title: Project Name
+          description: Name prefix for all AWS resources
+        aws_region:
+          type: string
+          title: AWS Region
+          default: us-east-1
+        vpc_cidr:
+          type: string
+          title: VPC CIDR
+          default: 10.0.0.0/16
+        s3_bucket_name:
+          type: string
+          title: S3 Bucket Name
+          description: Globally unique S3 bucket name
+
+  steps:
+    - id: fetch
+      name: Fetch Terraform Template
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          project_name: ${{ parameters.project_name }}
+          aws_region: ${{ parameters.aws_region }}
+          vpc_cidr: ${{ parameters.vpc_cidr }}
+          s3_bucket_name: ${{ parameters.s3_bucket_name }}
+
+    - id: publish
+      name: Publish to GitHub
+      action: publish:github
+      input:
+        repoUrl: github.com?owner=ramannkhanna2&repo=${{ parameters.project_name }}-infra
+        repoVisibility: private
+
+  output:
+    links:
+      - title: GitHub Repository
+        url: ${{ steps['publish'].output.remoteUrl }}
+
+
