@@ -4,8 +4,8 @@ metadata:
   name: ${{ values.project_name }}-infra
   description: Terraform-managed secured infrastructure
   annotations:
-    github.com/project-slug: ramannkhanna2/${{ values.project_name }}-infra
+    github.com/project-slug: ranjithkodumbu/${{ values.project_name }}-infra
 spec:
   type: infrastructure
-  owner: ramannkhanna2
+  owner: ranjithkodumbu
 
