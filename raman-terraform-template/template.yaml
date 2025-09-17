@@ -5,7 +5,7 @@ metadata:
   title: Terraform – Secured Infra (VPC, S3)
   description: Scaffold a Terraform module for VPC + S3 with encryption.
 spec:
-  owner: ramannkhanna2
+  owner: ranjithkodumbu
   type: infrastructure
 
   parameters:
@@ -45,7 +45,7 @@ spec:
       name: Publish to GitHub
       action: publish:github
       input:
-        repoUrl: github.com?owner=ramannkhanna2&repo=${{ parameters.project_name }}-infra
+        repoUrl: github.com?owner=ranjithkodumbu&repo=${{ parameters.project_name }}-infra
         repoVisibility: private
 
   output:
