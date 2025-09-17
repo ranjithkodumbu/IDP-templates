@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: ${{ values.project_name }}-infra
+  description: Terraform-managed secured infrastructure
+  annotations:
+    github.com/project-slug: ramannkhanna2/${{ values.project_name }}-infra
+spec:
+  type: infrastructure
+  owner: ramannkhanna2
+
